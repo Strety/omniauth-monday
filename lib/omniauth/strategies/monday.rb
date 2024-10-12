@@ -6,7 +6,7 @@ module OmniAuth
       option :client_options, {
         site: "https://api.monday.com/v2",
         authorize_url: "https://auth.monday.com/oauth2/authorize",
-        token_url: "https://auth.monday.com/oauth2/token",
+        token_url: "https://auth.monday.com/oauth2/token"
       }
 
       def request_phase
@@ -19,6 +19,10 @@ module OmniAuth
             params[v.to_sym] = request.params[v] if request.params[v]
           end
         end
+      end
+
+      def token_params
+        super.merge({ client_id: options.client_id, client_secret: options.client_secret })
       end
 
       uid { me["id"] }
